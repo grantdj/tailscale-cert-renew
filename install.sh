@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+if [ "$(uname -s)" != "Linux" ]; then
+  echo "This installer only supports Linux." >&2
+  exit 1
+fi
+
 SCRIPT_SRC="./renew-tailscale-cert.sh"
 SERVICE_SRC="./renew-tailscale-cert.service"
 TIMER_SRC="./renew-tailscale-cert.timer"

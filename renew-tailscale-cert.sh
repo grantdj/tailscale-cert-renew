@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+if [ "$(uname -s)" != "Linux" ]; then
+  echo "This script only supports Linux." >&2
+  exit 1
+fi
+
 ENV_FILE="/etc/default/renew-tailscale-cert"
 if [ -f "${ENV_FILE}" ]; then
   # shellcheck disable=SC1091
