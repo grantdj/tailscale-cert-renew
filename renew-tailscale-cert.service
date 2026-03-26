@@ -1,0 +1,12 @@
+[Unit]
+Description=Renew Tailscale HTTPS certificate
+After=network-online.target tailscaled.service
+Wants=network-online.target
+Requires=tailscaled.service
+
+[Service]
+Type=oneshot
+EnvironmentFile=-/etc/default/renew-tailscale-cert
+ExecStart=/usr/local/sbin/renew-tailscale-cert.sh
+User=root
+Group=root

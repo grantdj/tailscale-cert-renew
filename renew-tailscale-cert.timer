@@ -1,0 +1,9 @@
+[Unit]
+Description=Run Tailscale cert renewal every 2 months
+
+[Timer]
+OnCalendar=*-01,03,05,07,09,11-01 03:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
