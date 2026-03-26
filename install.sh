@@ -7,16 +7,18 @@ if [ "$(uname -s)" != "Linux" ]; then
 fi
 
 SCRIPT_SRC="./renew-tailscale-cert.sh"
+CHECK_SCRIPT_SRC="./check-tailscale-cert.sh"
 SERVICE_SRC="./renew-tailscale-cert.service"
 TIMER_SRC="./renew-tailscale-cert.timer"
 ENV_SRC="./renew-tailscale-cert.env.example"
 
 SCRIPT_DST="/usr/local/sbin/renew-tailscale-cert.sh"
+CHECK_SCRIPT_DST="/usr/local/sbin/check-tailscale-cert.sh"
 SERVICE_DST="/etc/systemd/system/renew-tailscale-cert.service"
 TIMER_DST="/etc/systemd/system/renew-tailscale-cert.timer"
 ENV_DST="/etc/default/renew-tailscale-cert"
 
-for f in "$SCRIPT_SRC" "$SERVICE_SRC" "$TIMER_SRC" "$ENV_SRC"; do
+for f in "$SCRIPT_SRC" "$CHECK_SCRIPT_SRC" "$SERVICE_SRC" "$TIMER_SRC" "$ENV_SRC"; do
   if [ ! -f "$f" ]; then
     echo "Missing required file: $f" >&2
     exit 1
@@ -24,6 +26,7 @@ for f in "$SCRIPT_SRC" "$SERVICE_SRC" "$TIMER_SRC" "$ENV_SRC"; do
 done
 
 sudo install -m 0755 "$SCRIPT_SRC" "$SCRIPT_DST"
+sudo install -m 0755 "$CHECK_SCRIPT_SRC" "$CHECK_SCRIPT_DST"
 sudo install -m 0644 "$SERVICE_SRC" "$SERVICE_DST"
 sudo install -m 0644 "$TIMER_SRC" "$TIMER_DST"
 
