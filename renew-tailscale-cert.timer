@@ -1,8 +1,12 @@
 [Unit]
-Description=Run Tailscale cert renewal every 2 months
+Description=Run Tailscale cert renewal daily
 
 [Timer]
-OnCalendar=*-01,03,05,07,09,11-01 03:00:00
+# Run daily. The script only re-issues when the cert is within 30 days of
+# expiry (--min-validity 720h), so a daily run is a no-op until renewal is
+# actually needed. A coarser interval risks the cert expiring between runs.
+OnCalendar=daily
+RandomizedDelaySec=1h
 Persistent=true
 
 [Install]

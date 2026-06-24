@@ -10,7 +10,7 @@ It installs:
 - `renew-tailscale-cert.timer` into `/etc/systemd/system/`
 - `/etc/default/renew-tailscale-cert` as the runtime config file
 
-The timer runs every two months and the script asks `tailscale cert` to renew only when the current certificate has less than 30 days remaining.
+The timer runs daily and the script asks `tailscale cert` to renew only when the current certificate has less than 30 days remaining, so most runs are a no-op. Running daily ensures the renewal always happens inside that 30-day window — a coarser interval can let the cert expire between runs.
 
 ## Requirements
 
