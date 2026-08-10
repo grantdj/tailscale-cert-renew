@@ -12,6 +12,8 @@ It installs:
 
 The timer runs daily and the script asks `tailscale cert` to renew only when the current certificate has less than 30 days remaining, so most runs are a no-op. Running daily ensures the renewal always happens inside that 30-day window — a coarser interval can let the cert expire between runs.
 
+When the certificate actually changes, the script runs `RELOAD_COMMAND` (e.g. `systemctl reload nginx`). Without it the server keeps serving the previous certificate from memory and a successful renewal is invisible to clients. Note that `/etc/default/renew-tailscale-cert` is sourced by bash, so multi-word values must be quoted.
+
 ## Requirements
 
 - Linux system using `systemd`
